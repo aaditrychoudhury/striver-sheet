@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        
+        vector<vector<int>> ans;
+        if(nums.empty()) return ans;
+        sort(nums.begin(),nums.end());
+        int n = nums.size();
+        for(int i =0;i<n;++i){
+            long long sum1= target - nums[i];
+            for(int j = i+1;j<n;++j){
+                int lo = j+1,hi=n-1;
+                long long sum = sum1 - nums[j];
+                while(lo<hi){
+                    long long sum2=nums[lo]+nums[hi];
+                    if(sum2 == sum){
+                        vector<int> temp(4,0);
+                        temp[0] = nums[i];
+                        temp[1] = nums[j];
+                        temp[2] = nums[lo];
+                        temp[3] = nums[hi];
+
+                        ans.push_back(temp);
+
+                        while(lo<hi && nums[lo] == temp[2]) ++lo;
+                        while(lo<hi && nums[hi] == temp[3]) --hi;
+                        //++lo;--hi;
+                    }else if(sum2 < sum) ++lo;
+                    else --hi;
+                }
+                while(j+1<n && nums[j] == nums[j+1]) ++j;
+            }
+            while(i+1<n && nums[i] == nums[i+1]) ++i;
+        }
+        return ans;
+    }
+};
