@@ -1,3 +1,4 @@
+//approach tc= 3n and sc = 2n
 class Solution {
 public:
     int trap(vector<int>& height) {
@@ -18,5 +19,28 @@ public:
             ans += (min(prefix[i],suffix[i]) - height[i]);
         }
         return ans;
+    }
+};
+//approach 2 two pointer 
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n= height.size();
+        int l =0,r=n-1,leftmax=0,rightmax =0;
+        int water = 0;
+        while(l<r){
+            if(height[l] <= height[r]){
+                if(height[l] >= leftmax) leftmax = height[l];
+                else water += (leftmax-height[l]);
+                ++l;
+            }
+            //height[r] >= height[l]
+            else{
+                if(height[r] >= rightmax) rightmax = height[r];
+                else water += (rightmax-height[r]);
+                --r;
+            }
+        }
+        return water;
     }
 };
